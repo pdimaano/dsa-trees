@@ -12,13 +12,19 @@ class BinaryTreeNode {
   /** minDepth(): return the minimum depth from the invoking node -- that is,
    * the length of the shortest path from the invoking node to a leaf. */
   minDepth() {
-
+    if (!this) return 0;
+    const left = this.minDepth.call(this.left);
+    const right = this.minDepth.call(this.right);
+    return 1 + Math.min(left, right);
   }
 
   /** maxDepth(): return the maximum depth from the invoking node -- that is,
    * the length of the longest path from the invoking node to a leaf. */
   maxDepth() {
-
+    if (!this) return 0;
+    const left = this.maxDepth.call(this.left);
+    const right = this.maxDepth.call(this.right);
+    return 1 + Math.max(left, right);
   }
 }
 
@@ -33,7 +39,8 @@ class BinaryTree {
   // this is a stack or recursion problem; we'll use recursion
 
   minDepth() {
-
+    if (!this.root) return 0;
+    return this.root.minDepth();
   }
 
   /** maxDepth(): return the maximum depth of the tree -- that is,
@@ -42,22 +49,71 @@ class BinaryTree {
   // this is a stack or recursion problem; we'll use recursion
 
   maxDepth() {
-
+    if (!this.root) return 0;
+    return this.root.maxDepth();
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
+    if (!this.root) return null;
 
+    const queue = [this.root];
+    let smallest = Infinity;
+    let result = null;
+
+    while (queue.length > 0) {
+      const node = queue.shift();
+      if (node.val < smallest && node.val > lowerBound) {
+        result = node.val;
+      }
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+
+    return result;
   }
 
   /** Further study!
    * areCousins(node1, node2): determine whether two nodes are cousins
-   * (i.e. are at the same level but have different parents. ) */
+   * (i.e. are at the same level but have different parents. )
+   *
+   *
+   *          gp      gp
+   *
+   *      p     p   p     p
+   *
+   *    c   c   c   c     c c
+   *
+   *
+   * same level diff parents!
+   *
+   * */
 
   areCousins(node1, node2) {
+    let p1;
+    let lvl1;
+    let p2;
+    let lvl2;
 
+    const queue = [[this.root, null, 0]];
+
+    while (queue.length > 0) {
+      const [node, parent, lvl] = queue.shift();
+      if (node === node1) {
+        p1 = parent;
+        lvl1 = lvl;
+      }
+      if (node === node2) {
+        p2 = parent;
+        lvl2 = lvl;
+      }
+      if (node.left) queue.push([node.left, node, lvl + 1]);
+      if (node.right) queue.push([node.right, node, lvl + 1]);
+    }
+
+    return lvl1 === lvl2 && p1 !== p2;
   }
 }
 

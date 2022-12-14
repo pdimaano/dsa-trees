@@ -21,6 +21,7 @@ class TreeNode {
 
       for (let child of current.children) toVisitStack.push(child);
     }
+
     return sum;
   }
 
@@ -40,6 +41,7 @@ class TreeNode {
 
       for (let child of current.children) toVisitStack.push(child);
     }
+
     return count;
   }
 
@@ -59,6 +61,7 @@ class TreeNode {
 
       for (let child of current.children) toVisitStack.push(child);
     }
+
     return count;
   }
 }
