@@ -13,8 +13,13 @@ class BinaryTreeNode {
    * the length of the shortest path from the invoking node to a leaf. */
   minDepth() {
     if (!this) return 0;
-    const left = this.minDepth.call(this.left);
     const right = this.minDepth.call(this.right);
+    const left = this.minDepth.call(this.left);
+    //! There is way to do where do not need call, avoid roundabout way
+    //* First check to see if left exists, then call minDepth on left node
+    //* Can then use code on lines 20 & 21 (check solution later)
+    // const left = this.left.minDepth();
+    // const right = this.right.minDepth();
     return 1 + Math.min(left, right);
   }
 
@@ -25,6 +30,7 @@ class BinaryTreeNode {
     const left = this.maxDepth.call(this.left);
     const right = this.maxDepth.call(this.right);
     return 1 + Math.max(left, right);
+    //* Check solution later
   }
 }
 
@@ -60,7 +66,7 @@ class BinaryTree {
     if (!this.root) return null;
 
     const queue = [this.root];
-    let smallest = Infinity;
+    let smallest = Infinity; //? Not getting reset?
     let result = null;
 
     while (queue.length > 0) {
@@ -92,10 +98,10 @@ class BinaryTree {
    * */
 
   areCousins(node1, node2) {
-    let p1;
-    let lvl1;
-    let p2;
-    let lvl2;
+    let p1; // parent one
+    let p2; // parent two
+    let lvl1; // level of node one
+    let lvl2; // level of node two
 
     const queue = [[this.root, null, 0]];
 

@@ -90,5 +90,6 @@ class Tree {
     return this.root.numGreater(lowerBound);
   }
 }
+//TODO: Can re-write recursively if have time
 
 module.exports = { Tree, TreeNode };
