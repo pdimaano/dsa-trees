@@ -42,17 +42,47 @@ class Node {
   /** dfsPreOrder(): Traverse from the invoking node using pre-order DFS.
    * Returns an array of visited nodes. */
 
-  dfsPreOrder() {}
+  dfsPreOrder() {
+    let arr = [];
+    if (this === null) return arr;
+    arr = [
+      ...arr,
+      this.val,
+      ...(this.left ? this.left.dfsPreOrder() : []),
+      ...(this.right ? this.right.dfsPreOrder() : []),
+    ];
+    return arr;
+  }
 
   /** dfsInOrder(): Traverse from the invoking node using in-order DFS.
    * Returns an array of visited nodes. */
 
-  dfsInOrder() {}
+  dfsInOrder() {
+    let arr = [];
+    if (this === null) return arr;
+    arr = [
+      ...arr,
+      ...(this.left ? this.left.dfsInOrder() : []),
+      this.val,
+      ...(this.right ? this.right.dfsInOrder() : []),
+    ];
+    return arr;
+  }
 
   /** dfsPostOrder(): Traverse from the invoking node using post-order DFS.
    * Returns an array of visited nodes. */
 
-  dfsPostOrder() {}
+  dfsPostOrder() {
+    let arr = [];
+    if (this === null) return arr;
+    arr = [
+      ...arr,
+      ...(this.left ? this.left.dfsPostOrder() : []),
+      ...(this.right ? this.right.dfsPostOrder() : []),
+      this.val,
+    ];
+    return arr;
+  }
 }
 
 class BinarySearchTree {
@@ -88,17 +118,26 @@ class BinarySearchTree {
   /** dfsPreOrder(): Traverse the BST using pre-order DFS.
    * Returns an array of visited nodes. */
 
-  dfsPreOrder() {}
+  dfsPreOrder() {
+    if (!this.root) return [];
+    return this.root.dfsPreOrder();
+  }
 
   /** dfsInOrder(): Traverse the BST using in-order DFS.
    * Returns an array of visited nodes. */
 
-  dfsInOrder() {}
+  dfsInOrder() {
+    if (!this.root) return [];
+    return this.root.dfsInOrder();
+  }
 
   /** dfsPostOrder(): Traverse the BST using post-order DFS.
    * Returns an array of visited nodes. */
 
-  dfsPostOrder() {}
+  dfsPostOrder() {
+    if (!this.root) return [];
+    return this.root.dfsPostOrder();
+  }
 
   /** bfs(): Traverse the BST using BFS.
    * Returns an array of visited nodes. */
